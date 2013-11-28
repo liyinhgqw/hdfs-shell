@@ -21,22 +21,22 @@ This is a very simple wrapper around the 'hadoop dfs' command that allows you to
   	Deleted hdfs://XX.ac.uk/user/foobar/data
 
 ### Commands
-Browing around:
-	cd ../
-	cd foo/
-	ls foo
+Browsing around:
+  	cd ../
+  	cd foo/
+  	ls foo
 
 Changing files:
-	touchz foo.txt
-	cat foo.txt
-	tail foo.txt
-	cp foo.txt foo2.txt
-	mkdir bar
-	rmr bar
+  	touchz foo.txt
+  	cat foo.txt
+  	tail foo.txt
+  	cp foo.txt foo2.txt
+  	mkdir bar
+  	rmr bar
 
 Copying file from/to local:
-	put ~/local.txt remote.txt
-	get remote.txt ~/local.txt
+  	put ~/local.txt remote.txt
+  	get remote.txt ~/local.txt
 
 
 And any other command supported by 'hadoop dfs'
