@@ -21,12 +21,14 @@ This is a very simple wrapper around the 'hadoop dfs' command that allows you to
   	Deleted hdfs://XX.ac.uk/user/foobar/data
 
 ### Commands
-Browsing around:
+	Browsing around:
+	================
   	cd ../
   	cd foo/
   	ls foo
 
-Changing files:
+	Changing files:
+	================
   	touchz foo.txt
   	cat foo.txt
   	tail foo.txt
@@ -34,12 +36,13 @@ Changing files:
   	mkdir bar
   	rmr bar
 
-Copying file from/to local:
+	Copying file from/to local:
+	================
   	put ~/local.txt remote.txt
   	get remote.txt ~/local.txt
 
 
-And any other command supported by 'hadoop dfs'
+	And any other command supported by 'hadoop dfs'
 
 ### Known Bugs/Limitations
 * No support for spaces in paths/file names
