@@ -1,7 +1,7 @@
 
 #!/bin/sh
 # (c) 2013 Matthias Linder <matthias@matthiaslinder.com>
-HPWD="/user/$USER"
+HPWD="/"
 
 C_GREEN="\e[32;1m"
 C_BLUE="\e[34;1m"
@@ -11,7 +11,7 @@ C_RED="\e[31;1m"
 H="hadoop dfs"
 
 function absolute() {
-  echo $@ | egrep "^/" || echo "$HPWD/$@"
+  echo $@ | egrep "^/" || echo "$HPWD/$@" | sed -e 's@//@/@g' 
 }
 
 while [ 1 ]; do
@@ -29,9 +29,10 @@ while [ 1 ]; do
     'put') $H "-copyFromLocal" "$2" "$(absolute $3)";;
     'cd')
       old=$HPWD
-      HPWD=$(absolute "$2" | sed -e 's@[^/]*/\.\./@@g' -e 's@/./@/@g')
+      HPWD=$(absolute "$2" | sed -e 's@/[^/]*/\.\.@@g' -e 's@/\.@@g')
+      if [ "$HPWD" = "" -o "$HPWD" = "." ]; then HPWD="/"; fi
       LS=$($H -ls "$HPWD") || HPWD=$old
-      echo "$LS" | tail -n +2 | sed 's/[^ ]* //g' | sed "s@^$HPWD/@@g"
+#      echo "$LS" | tail -n +2 | sed 's/[^ ]* //g' | sed "s@^$HPWD/@@g"
       ;;
     *)
       $H "-$1" $(absolute $2) || \
