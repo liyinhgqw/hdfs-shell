@@ -29,9 +29,29 @@ while [ 1 ]; do
     'put') $H "-copyFromLocal" "$2" "$(absolute $3)";;
     'cd')
       old=$HPWD
-      HPWD=$(absolute "$2" | sed -e 's@/[^/]*/\.\.@@g' -e 's@/\.@@g')
-      if [ "$HPWD" = "" -o "$HPWD" = "." ]; then HPWD="/"; fi
-      LS=$($H -ls "$HPWD") || HPWD=$old
+
+# remove /XX/..
+      HPWD=$(absolute "$2")
+      pre="@@"
+      while [ "$HPWD" != "$pre" ]; do
+        pre=$HPWD
+        HPWD=$(echo $HPWD | sed -e 's@/[^/]*/\.\.@@g')
+        if [ "$HPWD" = "" -o "$HPWD" = "." ]; then HPWD="/"; fi
+      done
+
+# remove /.
+      pre="@@"
+      while [ "$HPWD" != "$pre" ]; do
+        pre=$HPWD
+        HPWD=$(echo $HPWD | sed -e 's@/\.@@g')
+        if [ "$HPWD" = "" -o "$HPWD" = "." ]; then HPWD="/"; fi
+      done
+
+      if [ "$HPWD" != "/" ]; then
+       HPWD=$(echo ${HPWD%/})
+      fi
+
+#      LS=$($H -ls "$HPWD") || HPWD=$old
 #      echo "$LS" | tail -n +2 | sed 's/[^ ]* //g' | sed "s@^$HPWD/@@g"
       ;;
     *)
